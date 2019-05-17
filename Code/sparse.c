@@ -549,7 +549,7 @@ struct ExpType Exp(struct Node* vertex) {
         }
         type_syn.type = ltype.type;
     }
-    else if (CHECK_ID(vertex->childs[0], "AND") || CHECK_ID(vertex->childs[0], "OR")) {
+    else if (CHECK_ID(vertex->childs[1], "AND") || CHECK_ID(vertex->childs[1], "OR")) {
         struct ExpType ltype = Exp(vertex->childs[0]);
         struct ExpType rtype = Exp(vertex->childs[2]);
 
