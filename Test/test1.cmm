@@ -1,14 +1,7 @@
 int main()
 {
 	int i = 1;
-	/*dflkdfjdk
-	fldkfjdflkdjlf*/
-	/*dffdf
-	fldkfjdflkdjlfdfd
-
-	/*
-	*/
-	
-	fdfdf*/
-	int j = ~i;	
+	if(1 && 1) {
+	int i = 1;	
+}	
 }
