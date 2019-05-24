@@ -449,8 +449,7 @@ struct FieldList* DecList(struct Node* vertex, struct Type* type_inh) {
 struct Symbol* Dec(struct Node* vertex, struct Type* type_inh) {   
     SAFE_ID(vertex,"Dec");
     struct Symbol* var = VarDec(vertex->childs[0], type_inh);
-
-    if (CHECK_ID(vertex->childs[1], "ASSIGNOP")) {
+    if (CHECK_ID(vertex->childs[1], "ASSIGNOP")) {  
         if (struct_def_flag) {
             errorinfo(15, vertex->lineno, "Cannot initialize field when defining struct type");
         }
@@ -596,6 +595,9 @@ struct ExpType Exp(struct Node* vertex) {
             res = ltype.type;
         }
         type_syn.type = res;
+    }
+    else if(CHECK_ID(vertex->childs[0], "LP") && CHECK_ID(vertex->childs[1], "Exp")) {
+        return Exp(vertex->childs[1]);
     }
     else if (CHECK_ID(vertex->childs[0], "MINUS")) {
         struct ExpType rtype = Exp(vertex->childs[1]);
@@ -822,11 +824,12 @@ void display_symbol() {
 }
 
 // compare two Type structure, return true, if they are equal
-bool comp_type(struct Type* ltype, struct Type* rtype) {   //printf("%d, %d\n",ltype->basic,rtype->basic);
+bool comp_type(struct Type* ltype, struct Type* rtype) {   
+    //printf("%d, %d\n",ltype->basic,rtype->basic);
     if ((ltype ==  NULL || rtype == NULL) || ltype->kind != rtype->kind)  // ltype may be NULL 
         return false;
 
-    if (ltype->kind == BASIC) {
+    if (ltype->kind == BASIC) { 
         return ltype->basic == rtype->basic;
     }
     else if (ltype->kind == ARRAY) {
